@@ -20,3 +20,41 @@ html, body, #root {
   padding: 0;
   margin: 0;
 }
+
+/* CSS Colors for Power Plant Types with Background Color */
+.hydro { background-color: #001f3f; } /* Deep Blue */
+.solar { background-color: #ffdc00; } /* Bright Yellow */
+.gas { background-color: #0074d9; } /* Light Blue */
+.other { background-color: #808080; } /* Gray */
+.oil { background-color: #2a2a2a; } /* Dark Brown */
+.wind { background-color: #28a745; } /* Green */
+.nuclear { background-color: #6a0572; } /* Purple */
+.coal { background-color: #333333; } /* Dark Gray */
+.waste { background-color: #ff5733; } /* Orange */
+.biomass { background-color: #c3e6cb; } /* Light Green */
+.waveTidal { background-color: #00ffff; } /* Cyan */
+.petcoke { background-color: #8b0000; } /* Dark Red */
+.geothermal { background-color: #8b4513; } /* Reddish-Brown */
+.storage { background-color: #ffc0cb; } /* Pink */
+.cogeneration { background-color: #d2b48c; } /* Light Brown */
+
+.custom-marker {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.custom-marker::before {
+  position: absolute;
+  transform: rotate(45);
+}
+
+.icon {
+  width: 24px; /* Width of the icon inside the marker */
+  height: 24px; /* Height of the icon inside the marker */
+  position: absolute;
+  top: 50%; /* Center the icon vertically */
+  left: 50%; /* Center the icon horizontally */
+  transform: translate(-50%, -50%);
+}

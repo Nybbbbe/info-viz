@@ -3,14 +3,16 @@ import './App.css'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import MarkerClusterGroup from "react-leaflet-cluster";
 import power_plant_database from './power_plant_database.json';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import L from 'leaflet';
 
 interface PowerPlant {
-  country_long: String,
-  name: String,
+  country_long: string,
+  name: string,
   capacity_mw: number,
   latitude: number,
   longitude: number,
-  primary_fuel: String,
+  primary_fuel: string,
   commissioning_year: number | null
 }
 
@@ -18,6 +20,24 @@ const powerPlantData = power_plant_database as PowerPlant[]
 
 function App() {
   // const [count, setCount] = useState(0)
+
+  const getPowerPlantIcon = (type: string, iconUrl?: string): L.DivIcon => {
+    const className = type.toLowerCase();
+    const markerHtml = `<div class="custom-marker ${className}">
+                          ${iconUrl ? `<img src="${iconUrl}" class="icon" />` : ''}
+                          <div class="marker-dot"></div>
+                       </div>`;
+  
+    const markerIcon = L.divIcon({
+      className: 'custom-marker-icon',
+      html: markerHtml,
+      iconAnchor: [16, 37], // icon center point
+      popupAnchor: [0, -30] // popup placement relative to the icon
+    });
+
+    return markerIcon;
+  }
+  
 
   return (
     <>
