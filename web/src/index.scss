@@ -1,0 +1,105 @@
+:root {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    line-height: 1.5;
+    font-weight: 400;
+
+    color-scheme: light dark;
+    color: rgba(255, 255, 255, 0.87);
+    background-color: #242424;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* CSS Colors for Power Plant Types with Background Color */
+.hydro {
+    background-color: #001f3f;
+} /* Deep Blue */
+.solar {
+    background-color: #ffdc00;
+} /* Bright Yellow */
+.gas {
+    background-color: #0074d9;
+} /* Light Blue */
+.other {
+    background-color: #808080;
+} /* Gray */
+.oil {
+    background-color: #2a2a2a;
+} /* Dark Brown */
+.wind {
+    background-color: #28a745;
+} /* Green */
+.nuclear {
+    background-color: #6a0572;
+} /* Purple */
+.coal {
+    background-color: #333333;
+} /* Dark Gray */
+.waste {
+    background-color: #ff5733;
+} /* Orange */
+.biomass {
+    background-color: #c3e6cb;
+} /* Light Green */
+.waveTidal {
+    background-color: #00ffff;
+} /* Cyan */
+.petcoke {
+    background-color: #8b0000;
+} /* Dark Red */
+.geothermal {
+    background-color: #8b4513;
+} /* Reddish-Brown */
+.storage {
+    background-color: #ffc0cb;
+} /* Pink */
+.cogeneration {
+    background-color: #d2b48c;
+} /* Light Brown */
+
+.custom-marker {
+    border-radius: 50%;
+    border: 2px solid;
+    width: 24px;
+    height: 24px;
+    position: relative;
+}
+
+// .custom-marker-arrow {
+//     position: absolute;
+//     width: 0px;
+//     height: 0px;
+//     bottom: -30px;
+//     left: -6px;
+//     border: 10px solid transparent;
+//     border-top: 17px solid;
+// }
+
+.icon {
+    width: 16px; /* Width of the icon inside the marker */
+    height: 16px; /* Height of the icon inside the marker */
+    position: absolute;
+    top: 50%; /* Center the icon vertically */
+    left: 50%; /* Center the icon horizontally */
+    transform: translate(-50%, -50%);
+    color: white;
+    fill: white;
+    stroke: white;
+    svg {
+        width: 16px;
+        height: 16px;
+    }
+}

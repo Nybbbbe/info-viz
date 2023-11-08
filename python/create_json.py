@@ -14,7 +14,9 @@ desired_columns = ['country_long', 'name', 'capacity_mw', 'latitude', 'longitude
 # Create a new DataFrame with the desired columns
 new_df = data[desired_columns]
 
+new_df = new_df[new_df['country_long'] == 'Finland']
+
 print(new_df.head(10))
 
-output_json_path = './python/power_plant_database.json'  # Replace this with the desired output file path
+output_json_path = './python/power_plant_database_small.json'  # Replace this with the desired output file path
 new_df.to_json(output_json_path, indent=4, orient='records')
