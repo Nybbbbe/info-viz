@@ -81,8 +81,6 @@ class MapHandler {
         })
 
         this.map?.addLayer(markers)
-
-        markers.
     }
 
     private getDivIcon = (type: string): L.DivIcon => {
