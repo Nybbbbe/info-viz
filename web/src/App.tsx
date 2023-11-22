@@ -1,5 +1,3 @@
-/// <reference types="vite-plugin-svgr/client" />
-import { useState } from 'react'
 import './App.css'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
@@ -15,23 +13,8 @@ import {
     oil,
     solar,
     wind,
+    coal,
 } from './assets/icons'
-
-// import biomass from './assets/biomass.svg?react'
-// // @ts-ignore
-// import cogeneration from './assets/cogeneration.svg?react'
-// // @ts-ignore
-// import gas from './assets/gas.svg?react'
-// // @ts-ignore
-// import hydro from './assets/hydro.svg?react'
-// // @ts-ignore
-// import nuclear from './assets/nuclear.svg?react'
-// // @ts-ignore
-// import oil from './assets/oil.svg?react'
-// // @ts-ignore
-// import solar from './assets/solar.svg?react'
-// // @ts-ignore
-// import wind from './assets/wind.svg?react'
 
 interface PowerPlant {
     country_long: string
@@ -54,6 +37,7 @@ const existingIcons: { [id: string]: string } = {
     oil: oil(),
     solar: solar(),
     wind: wind(),
+    coal: coal(),
 }
 
 const App = () => {
@@ -91,6 +75,15 @@ const App = () => {
             return markerIcon
         }
     }
+
+    // const buildQuadtree = (points) => {
+    //     const quadtreeRoot = quadtree()
+    //         .x((d) => d.lng)
+    //         .y((d) => d.lat)
+    //         .addAll(points)
+
+    //     return quadtreeRoot
+    // }
 
     return (
         <>
