@@ -1,29 +1,27 @@
-import React from 'react'
-import { Marker, Popup, MarkerProps } from 'react-leaflet'
-import { Marker as LeafletMarker } from 'leaflet'
+import L from 'leaflet'
 
-// Define the additional fields you want to add
-interface AdditionalMarkerProps {
-    customField1: string
-    customField2: number
+interface CustomMarkerOptions extends L.MarkerOptions {
+    primaryFuel: string
+    mw: number
 }
 
-// Combine the existing MarkerProps with the AdditionalMarkerProps
-interface ExtendedMarkerProps extends MarkerProps, AdditionalMarkerProps {}
+class CustomMarker extends L.Marker {
+    private _primaryFuel: string
+    private _mw: number
 
-// Create a new component that extends the existing Marker component
-const ExtendedMarker: React.ForwardRefExoticComponent<
-    ExtendedMarkerProps & React.RefAttributes<LeafletMarker<any>>
-> = React.forwardRef((props, ref) => {
-    // Destructure the additional fields from props
-    const { customField1, customField2, ...markerProps } = props
+    constructor(latlng: L.LatLngExpression, options: CustomMarkerOptions) {
+        super(latlng, options)
+        this._primaryFuel = options.primaryFuel
+        this._mw = options.mw
+    }
 
-    return (
-        <Marker {...markerProps} ref={ref}>
-            {/* Your existing Marker content */}
-            {props.children}
-        </Marker>
-    )
-})
+    get primaryFuel(): string {
+        return this._primaryFuel
+    }
 
-export default ExtendedMarker
+    get mw(): number {
+        return this._mw
+    }
+}
+
+export default CustomMarker

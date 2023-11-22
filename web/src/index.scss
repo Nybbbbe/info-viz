@@ -23,52 +23,75 @@ body,
     margin: 0;
 }
 
-/* CSS Colors for Power Plant Types with Background Color */
 .hydro {
-    background-color: #001f3f;
-} /* Deep Blue */
+    background-color: #004da8;
+}
+
 .solar {
-    background-color: #ffdc00;
-} /* Bright Yellow */
+    background-color: #e6e600;
+    border-color: #000000 !important;
+    * {
+        fill: #000000;
+        border-color: #000000;
+    }
+}
+
 .gas {
-    background-color: #0074d9;
-} /* Light Blue */
+    background-color: #e69800;
+    border-color: #000000 !important;
+    * {
+        fill: #000000;
+        border-color: #000000;
+    }
+}
+
 .other {
-    background-color: #808080;
-} /* Gray */
+    background-color: #c500ff;
+}
+
 .oil {
-    background-color: #2a2a2a;
-} /* Dark Brown */
+    background-color: #894444;
+}
+
 .wind {
-    background-color: #28a745;
-} /* Green */
+    background-color: #73b2ff;
+}
+
 .nuclear {
-    background-color: #6a0572;
-} /* Purple */
+    background-color: #38a800;
+}
+
 .coal {
-    background-color: #333333;
-} /* Dark Gray */
+    background-color: #000000;
+}
+
 .waste {
     background-color: #ff5733;
-} /* Orange */
+}
+
 .biomass {
-    background-color: #c3e6cb;
-} /* Light Green */
+    background-color: #ff00c5;
+}
+
 .waveTidal {
     background-color: #00ffff;
-} /* Cyan */
+}
+
 .petcoke {
     background-color: #8b0000;
-} /* Dark Red */
+}
+
 .geothermal {
-    background-color: #8b4513;
-} /* Reddish-Brown */
+    background-color: #ff0000;
+}
+
 .storage {
     background-color: #ffc0cb;
-} /* Pink */
+}
+
 .cogeneration {
     background-color: #d2b48c;
-} /* Light Brown */
+}
 
 .custom-marker {
     border-radius: 50%;
@@ -102,4 +125,34 @@ body,
         width: 16px;
         height: 16px;
     }
+}
+
+.legend-container {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 1001;
+    background-color: rgba($color: #ffffff, $alpha: 0.9);
+    border-radius: 0 0 0 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.legend-circle {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.legend-text {
+    color: #000000;
+    font-weight: bold;
 }

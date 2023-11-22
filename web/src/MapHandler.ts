@@ -15,6 +15,8 @@ import {
     wind,
     coal,
 } from './assets/icons'
+import CustomMarker from './ExtendedMarker'
+import Chart from 'chart.js/auto'
 
 interface PowerPlant {
     country_long: string
@@ -64,17 +66,110 @@ class MapHandler {
         }
     }
 
+    private createCustomClusterIcon(childMarkers: L.Marker[]): L.DivIcon {
+        const customMarkers = childMarkers as CustomMarker[]
+
+        const fuelCounts: { [key: string]: number } = {}
+        customMarkers.forEach((marker) => {
+            const primaryFuel = marker.primaryFuel
+            const mw = marker.mw
+            if (primaryFuel) {
+                fuelCounts[primaryFuel] = (fuelCounts[primaryFuel] || 0) + mw
+            }
+        })
+
+        // Prepare data for the pie chart
+        const labels = Object.keys(fuelCounts)
+        const data = labels.map((label) => fuelCounts[label])
+
+        // Define colors for each fuel type
+        const fuelColors: { [key: string]: string } = {
+            Coal: '#000000',
+            Gas: '#e69800',
+            Hydro: '#004da8',
+            Nuclear: '#38a800',
+            Oil: '#894444',
+            Wind: '#73b2ff',
+            Biomass: '#ff00c5',
+            Geothermal: '#ff0000',
+            Solar: '#e6e600',
+            Other: '#c500ff',
+
+            Storage: '#ffc0cb',
+            Cogeneration: '#d2b48c',
+            Waste: '#ff5733',
+            WaveTidal: '#00ffff',
+            Petcoke: '#8b0000',
+        }
+
+        // Use Chart.js to create a pie chart with specific colors
+        const canvas = document.createElement('canvas')
+        const ctx = canvas.getContext('2d')
+
+        if (ctx) {
+            const colors = labels.map((label) => fuelColors[label] || '#CCCCCC')
+            const total = data.reduce((acc, value) => acc + value, 0)
+            let startAngle = 0
+            canvas.width = 40
+            canvas.height = 40
+
+            for (let i = 0; i < data.length; i++) {
+                const percentage = data[i] / total
+                const endAngle = startAngle + percentage * 2 * Math.PI
+
+                ctx.beginPath()
+                ctx.moveTo(20, 20) // Center of the canvas, adjust as needed
+                ctx.arc(20, 20, 20, startAngle, endAngle)
+                ctx.fillStyle = colors[i]
+                ctx.fill()
+
+                startAngle = endAngle
+            }
+
+            // const inspectDiv = document.createElement('div')
+            // inspectDiv.style.position = 'absolute'
+            // inspectDiv.style.top = '0'
+            // inspectDiv.style.left = '0'
+            // inspectDiv.style.zIndex = '1000'
+            // inspectDiv.style.width = '400px'
+            // inspectDiv.style.height = '400px'
+            // inspectDiv.style.backgroundColor = 'lightgrey'
+            // inspectDiv.innerHTML = `<img src="${canvas.toDataURL()}" alt="chart-inspection" />`
+            // inspectDiv.appendChild(canvas)
+            // document.body.appendChild(inspectDiv)
+
+            const dataURL = canvas.toDataURL()
+
+            return L.divIcon({
+                html: `<img src="${dataURL}" alt="cluster-icon" />`,
+                className: 'custom-cluster-icon',
+                iconSize: [40, 40], // Adjust the size as needed
+            })
+        }
+
+        return L.divIcon({ className: 'custom-cluster-icon' })
+    }
+
     private createMarkerCluster = (): void => {
-        const markers = L.markerClusterGroup()
+        const markers = L.markerClusterGroup({
+            iconCreateFunction: (cluster) => {
+                const childMarkers = cluster.getAllChildMarkers()
+                const customIcon = this.createCustomClusterIcon(childMarkers)
+                return customIcon
+            },
+        })
 
         powerPlantData.forEach((powerPlant) => {
-            const { latitude, longitude, name, primary_fuel } = powerPlant
+            const { latitude, longitude, name, primary_fuel, capacity_mw } =
+                powerPlant
 
             if (latitude !== null && longitude !== null) {
                 const customIcon = this.getDivIcon(primary_fuel)
 
-                const marker = L.marker([latitude, longitude], {
+                const marker = new CustomMarker([latitude, longitude], {
                     icon: customIcon,
+                    primaryFuel: primary_fuel,
+                    mw: capacity_mw,
                 }).bindPopup(`<b>${name}</b><br>Primary Fuel: ${primary_fuel}`)
                 markers.addLayer(marker)
             }
