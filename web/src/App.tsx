@@ -2,7 +2,7 @@ import './App.css'
 import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import power_plant_database from './power_plant_database_small.json'
-import L from 'leaflet'
+import L, { MarkerCluster } from 'leaflet'
 
 import {
     biomass,
@@ -15,6 +15,7 @@ import {
     wind,
     coal,
 } from './assets/icons'
+import ExtendedMarker from './ExtendedMarker'
 
 interface PowerPlant {
     country_long: string
@@ -76,6 +77,15 @@ const App = () => {
         }
     }
 
+    const createClusterCustomIcon = function (cluster: MarkerCluster) {
+        console.log(cluster.getAllChildMarkers()[0])
+        return L.divIcon({
+            html: `<span>${cluster.getChildCount()}</span>`,
+            className: 'custom-marker-cluster',
+            iconSize: L.point(33, 33, true),
+        })
+    }
+
     // const buildQuadtree = (points) => {
     //     const quadtreeRoot = quadtree()
     //         .x((d) => d.lng)
@@ -97,10 +107,13 @@ const App = () => {
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <MarkerClusterGroup chunkedLoading>
+                <MarkerClusterGroup
+                    chunkedLoading
+                    iconCreateFunction={createClusterCustomIcon}
+                >
                     {powerPlantData.map((powerPlant, index) => {
                         return (
-                            <Marker
+                            <ExtendedMarker
                                 key={index}
                                 position={[
                                     powerPlant.latitude,
@@ -109,13 +122,15 @@ const App = () => {
                                 icon={getPowerPlantIcon(
                                     powerPlant.primary_fuel,
                                 )}
+                                customField1={'12'}
+                                customField2={12}
                             >
                                 <Popup>
                                     {powerPlant.name} in{' '}
                                     {powerPlant.country_long} <br /> Power plant
                                     type: {powerPlant.primary_fuel}
                                 </Popup>
-                            </Marker>
+                            </ExtendedMarker>
                         )
                     })}
                 </MarkerClusterGroup>
