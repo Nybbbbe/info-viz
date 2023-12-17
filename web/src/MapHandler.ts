@@ -16,7 +16,6 @@ import {
     coal,
 } from './assets/icons'
 import CustomMarker from './ExtendedMarker'
-import Chart from 'chart.js/auto'
 
 interface PowerPlant {
     country_long: string

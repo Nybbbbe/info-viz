@@ -1,5 +1,3 @@
-import React from 'react'
-
 const MapLegend = () => {
     const legendItems = [
         { text: 'Hydro', color: '#004da8' },
